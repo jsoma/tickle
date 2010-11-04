@@ -28,6 +28,7 @@ class TestParsing < Test::Unit::TestCase
     assert_date_match(@date.bump(:week, 1) , 'weekly')
     assert_date_match(@date.bump(:month, 1) , 'monthly')
     assert_date_match(@date.bump(:year, 1) , 'yearly')
+    assert_date_match(@date.bump(:year, 1) , 'annually')
 
     assert_date_match(@date.bump(:day, 3), 'every 3 days')
     assert_date_match(@date.bump(:week, 3), 'every 3 weeks')
