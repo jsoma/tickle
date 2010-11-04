@@ -259,15 +259,20 @@ module Tickle  #:nodoc:
 
     protected
 
+    # normalize_us_holidays can be called before @start is initialized, so just use the current time
+    def reference_date
+      @start || Time.now
+    end
+
     # Returns the next available month based on the current day of the month.
     # For example, if get_next_month(15) is called and the start date is the 10th, then it will return the 15th of this month.
     # However, if get_next_month(15) is called and the start date is the 18th, it will return the 15th of next month.
     def get_next_month(number)
-      month = number.to_i < @start.day ? (@start.month == 12 ? 1 : @start.month + 1) : @start.month
+      month = number.to_i < reference_date.day ? (reference_date.month == 12 ? 1 : reference_date.month + 1) : reference_date.month
     end
 
     def next_appropriate_year(month, day)
-      year = (Date.new(@start.year.to_i, month.to_i, day.to_i) == @start.to_date) ? @start.year + 1 : @start.year
+      year = (Date.new(reference_date.year.to_i, month.to_i, day.to_i) == reference_date.to_date) ? reference_date.year + 1 : reference_date.year
       return year
     end
 
